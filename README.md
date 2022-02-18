@@ -1,4 +1,11 @@
 # contacts-manager
+
+[![GitHub issues](https://img.shields.io/github/stars/Vishal1297/contacts-manager)](https://github.com/Vishal1297/contacts-manager/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Vishal1297/contacts-manager)](https://github.com/Vishal1297/contacts-manager/network/members)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Vishal1297/contacts-manager?style=plastic)](https://github.com/Vishal1297/contacts-manager/pulls)
+[![GitHub issues](https://img.shields.io/github/issues/Vishal1297/contacts-manager?style=plastic)](https://github.com/Vishal1297/contacts-manager/issues)
+[![GitHub License](https://img.shields.io/github/license/Vishal1297/contacts-manager)](https://github.com/Vishal1297/contacts-manager/blob/main/LICENSE)
+
 ### A Spring Boot REST CRUD API for managing contacts.
 
 ### Steps to Setup
@@ -13,7 +20,9 @@ https://github.com/Vishal1297/contacts-manager.git
 ```bash
 create database contacts
 ```
-**Note: MySQL database installation is required.**
+
+**Note**: MySQL database installation is required.
+
 
 **3. Change mysql username and password as per your installation**
 
@@ -32,9 +41,10 @@ java -jar build/libs/ContactsManager-0.0.1-SNAPSHOT.jar
 
 ```
 
-The app will start running at <http://localhost:8080>.
+**The app will start running at <http://localhost:8080>.**
 
-### Explore Rest APIs
+
+### Explore Contacts Rest APIs
 
 The app defines following CRUD APIs.
 
