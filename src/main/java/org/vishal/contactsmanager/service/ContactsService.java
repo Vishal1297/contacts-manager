@@ -24,18 +24,22 @@ public class ContactsService {
 
     public Contact addOrUpdateContact(Contact contact) throws ApplicationException {
         validationService.validateContact(contact);
-        if (contact.getUuid() == null || contact.getUuid().isEmpty()){
+        if (contact.getUuid() == null || contact.getUuid().isEmpty()) {
             contact.setUuid(UUID.randomUUID().toString());
         }
-        if (contact.getAddress() != null && (contact.getAddress().getUuid() == null || contact.getUuid().isEmpty())){
+
+        if (contact.getAddress() != null && (contact.getAddress().getUuid() == null || contact.getUuid().isEmpty())) {
             contact.getAddress().setUuid(UUID.randomUUID().toString());
         }
-
         return contactsRepository.save(contact);
     }
 
-    public List<Contact> getContactByPostalCode(String postalCode) {
-        return contactsRepository.getContactsByAddress_PostalCode(postalCode);
+    public List<Contact> getContactByAddressCity(String city) {
+        return contactsRepository.findByAddressCity(city);
+    }
+
+    public List<Contact> getContactByAddressPostalCode(String postalCode) {
+        return contactsRepository.findByAddressPostalCode(postalCode);
     }
 
     public List<Contact> getAllContacts() {
@@ -46,7 +50,7 @@ public class ContactsService {
         return contactsRepository.findById(uuid);
     }
 
-    public Boolean deleteById(String uuid) {
+    public boolean deleteById(String uuid) {
         contactsRepository.deleteById(uuid);
         return true;
     }

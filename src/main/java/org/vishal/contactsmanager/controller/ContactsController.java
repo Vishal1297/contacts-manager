@@ -18,7 +18,7 @@ public class ContactsController {
     private ContactsService contactsService;
 
     @Autowired
-    public void setContactsService(ContactsService contactsService) {
+    public ContactsController(ContactsService contactsService) {
         this.contactsService = contactsService;
     }
 
@@ -29,7 +29,7 @@ public class ContactsController {
 
     @GetMapping(value = "/contacts/{postalCode}")
     public List<Contact> getContactByPostalCode(@PathVariable("postalCode") String postalCode) {
-        return contactsService.getContactByPostalCode(postalCode);
+        return contactsService.getContactByAddressPostalCode(postalCode);
     }
 
     @GetMapping(value = "/contacts")
