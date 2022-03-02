@@ -27,7 +27,7 @@ public class ContactsService {
         if (contact.getUuid() == null || contact.getUuid().isEmpty()){
             contact.setUuid(UUID.randomUUID().toString());
         }
-        if (contact.getAddress() != null && (contact.getAddress().getUuid() == null || contact.getUuid().isEmpty())){
+        if (contact.getAddress() != null && (contact.getAddress().getUuid() == null || contact.getUuid().isEmpty())) {
             contact.getAddress().setUuid(UUID.randomUUID().toString());
         }
 

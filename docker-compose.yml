@@ -1,0 +1,25 @@
+version: "3"
+services:
+  spring-boot-app:
+    container_name: contacts-manager-app
+    image: contacts-manager-image
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - contacts-manager-network
+
+  mysql-db:
+    container_name: contact-manager-db
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: contacts
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - contacts-manager-network
+
+networks:
+  contacts-manager-network:
+    driver: bridge

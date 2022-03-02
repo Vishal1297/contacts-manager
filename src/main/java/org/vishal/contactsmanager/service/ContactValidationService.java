@@ -11,14 +11,16 @@ public class ContactValidationService {
     public void validateContact(Contact contact) throws ApplicationException {
         if (contact == null) {
             throw new NotAllowedException("Contact required");
-        }else if (contact.getFullName() == null || contact.getFullName().isEmpty()){
+        }
+
+        if (contact.getFullName() == null || contact.getFullName().isEmpty()) {
             throw new NotAllowedException("Contact full name not provided");
-        }else {
-            if (contact.getAddress() != null){
-                if (contact.getAddress().getPostalCode() == null
-                        || contact.getAddress().getPostalCode().isEmpty()){
-                    throw new NotAllowedException("Contact postal code not provided");
-                }
+        }
+
+        if (contact.getAddress() != null) {
+            if (contact.getAddress().getPostalCode() == null
+                    || contact.getAddress().getPostalCode().isEmpty()) {
+                throw new NotAllowedException("Contact postal code not provided");
             }
         }
     }
