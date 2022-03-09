@@ -1,22 +1,29 @@
-version: "3"
+version: '3.8'
 services:
+  mysql-db:
+    container_name: contacts-manager-db
+    image: mysql
+    ports:
+      - '3306:3306'
+    restart: on-failure
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 30s
+      retries: 10
+    environment:
+      MYSQL_DATABASE: contacts
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - contacts-manager-network
+
   spring-boot-app:
     container_name: contacts-manager-app
     image: contacts-manager-image
     build: .
     ports:
-      - "8080:8080"
-    networks:
-      - contacts-manager-network
-
-  mysql-db:
-    container_name: contact-manager-db
-    image: mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: contacts
-      MYSQL_ROOT_PASSWORD: password
+      - '8080:8080'
+    depends_on:
+      - 'contact-manager-db'
     networks:
       - contacts-manager-network
 

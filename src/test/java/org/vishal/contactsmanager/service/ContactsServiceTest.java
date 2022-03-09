@@ -8,11 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.vishal.contactsmanager.exceptions.ApplicationException;
-import org.vishal.contactsmanager.model.Address;
 import org.vishal.contactsmanager.model.Contact;
 import org.vishal.contactsmanager.respository.ContactsRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +19,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.vishal.contactsmanager.util.TestDataFactory.createContact;
+import static org.vishal.contactsmanager.util.TestDataFactory.createContacts;
 
 @ExtendWith(MockitoExtension.class)
 class ContactsServiceTest implements WithAssertions {
@@ -38,7 +38,6 @@ class ContactsServiceTest implements WithAssertions {
 
     @BeforeEach
     void setUp() {
-
     }
 
     @Test
@@ -92,16 +91,5 @@ class ContactsServiceTest implements WithAssertions {
         boolean contactIsDeleted = underTest.deleteById(RANDOM_UUID);
         assertThat(contactIsDeleted).isTrue();
         verify(repository).deleteById(RANDOM_UUID);
-    }
-
-    private Contact createContact() {
-        Address address = new Address(UUID.randomUUID().toString(), "NEW YORK", "10005");
-        return new Contact(UUID.randomUUID().toString(), "FULL NAME", System.currentTimeMillis(), address);
-    }
-
-    private List<Contact> createContacts() {
-        List<Contact> contacts = new ArrayList<>();
-        contacts.add(createContact());
-        return contacts;
     }
 }

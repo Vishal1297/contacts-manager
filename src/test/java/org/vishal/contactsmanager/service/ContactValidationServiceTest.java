@@ -3,14 +3,9 @@ package org.vishal.contactsmanager.service;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.vishal.contactsmanager.exceptions.NotAllowedException;
 import org.vishal.contactsmanager.model.Address;
 import org.vishal.contactsmanager.model.Contact;
-import org.vishal.contactsmanager.respository.ContactsRepository;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

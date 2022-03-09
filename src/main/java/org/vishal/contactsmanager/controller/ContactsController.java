@@ -27,8 +27,13 @@ public class ContactsController {
         return contactsService.addOrUpdateContact(contact);
     }
 
+    @GetMapping(value = "/contacts/{city}")
+    public List<Contact> getContactsByCity(@PathVariable("city") String city) {
+        return contactsService.getContactByAddressCity(city);
+    }
+
     @GetMapping(value = "/contacts/{postalCode}")
-    public List<Contact> getContactByPostalCode(@PathVariable("postalCode") String postalCode) {
+    public List<Contact> getContactsByPostalCode(@PathVariable("postalCode") String postalCode) {
         return contactsService.getContactByAddressPostalCode(postalCode);
     }
 
