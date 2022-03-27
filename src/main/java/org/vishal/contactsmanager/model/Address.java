@@ -3,6 +3,7 @@ package org.vishal.contactsmanager.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Address {
@@ -16,6 +17,9 @@ public class Address {
 
     @Column(name = "postalCode")
     private String postalCode;
+
+    @OneToOne(mappedBy = "address")
+    private Contact contact;
 
     public Address() {
     }
@@ -50,12 +54,21 @@ public class Address {
         this.postalCode = postalCode;
     }
 
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
                 "uuid='" + uuid + '\'' +
                 ", city='" + city + '\'' +
                 ", postalCode='" + postalCode + '\'' +
+                ", contact=" + contact +
                 '}';
     }
 }
