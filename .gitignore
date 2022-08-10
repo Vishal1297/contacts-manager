@@ -37,3 +37,6 @@ out/
 
 ### Log file ##
 *.log
+
+## JPA Buddy Plugin ##
+*.jpb/

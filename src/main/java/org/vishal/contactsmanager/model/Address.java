@@ -1,5 +1,7 @@
 package org.vishal.contactsmanager.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,6 +21,7 @@ public class Address {
     private String postalCode;
 
     @OneToOne(mappedBy = "address")
+    @JsonBackReference
     private Contact contact;
 
     public Address() {

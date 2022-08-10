@@ -1,5 +1,7 @@
 package org.vishal.contactsmanager.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +20,7 @@ public class Contact {
 
     @OneToOne(cascade = CascadeType.ALL , orphanRemoval = true)
     @JoinColumn(name = "address_uuid")
+    @JsonManagedReference
     private Address address;
 
     public Contact() {

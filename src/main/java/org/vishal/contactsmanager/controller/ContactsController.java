@@ -15,7 +15,7 @@ import java.util.Map;
 @RequestMapping("/contact/v1")
 public class ContactsController {
 
-    private ContactsService contactsService;
+    private final ContactsService contactsService;
 
     @Autowired
     public ContactsController(ContactsService contactsService) {
