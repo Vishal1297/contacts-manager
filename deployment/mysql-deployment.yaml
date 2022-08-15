@@ -23,7 +23,7 @@ spec:
           imagePullPolicy: "IfNotPresent"
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: YWRtaW5wYXNzCg==
+              value: root
             - name: MYSQL_DATABASE
               value: contacts
           ports:
@@ -41,7 +41,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: mysql # DNS name
   labels:
     app: mysql
     tier: database
