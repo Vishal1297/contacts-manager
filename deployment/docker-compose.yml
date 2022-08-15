@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   api_service:
-    build: .
+    build: ..
     restart: always
     ports:
       - "8080:8080"
@@ -16,4 +16,4 @@ services:
       MYSQL_DATABASE: contacts
       MYSQL_USER: LXQgdmlzaGFsCg==
       MYSQL_PASSWORD: LXQgTXlwYXNzQG15c3FsMTIK
-      MYSQL_ROOT_PASSWORD: LXQgYWRtaW5wYXNzCg==
+      MYSQL_ROOT_PASSWORD: YWRtaW5wYXNzCg==
