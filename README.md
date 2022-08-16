@@ -5,6 +5,7 @@
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Vishal1297/contacts-manager?style=plastic)](https://github.com/Vishal1297/contacts-manager/pulls)
 [![GitHub issues](https://img.shields.io/github/issues/Vishal1297/contacts-manager?style=plastic)](https://github.com/Vishal1297/contacts-manager/issues)
 [![GitHub License](https://img.shields.io/github/license/Vishal1297/contacts-manager)](https://github.com/Vishal1297/contacts-manager/blob/main/LICENSE)
+[![Java CI with Gradle](https://github.com/Vishal1297/contacts-manager/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/Vishal1297/contacts-manager/actions/workflows/gradle.yml)
 
 ### A Spring Boot REST CRUD API for managing contacts.
 
