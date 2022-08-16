@@ -3,6 +3,7 @@ kind: Service # Kubernetes resource kind we are creating
 metadata: # Metadata of the resource kind we are creating
   name: spring-test-service
 spec:
+  type: NodePort
   selector:
     app: spring-test-app
   ports:
