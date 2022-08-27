@@ -1,15 +1,20 @@
 package org.vishal.contactsmanager.controller;
 
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.vishal.contactsmanager.exceptions.ApplicationException;
 import org.vishal.contactsmanager.exceptions.ResourceNotFoundException;
 import org.vishal.contactsmanager.model.Contact;
 import org.vishal.contactsmanager.service.ContactsService;
+import org.vishal.contactsmanager.service.providers.ResponseHandler;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static org.vishal.contactsmanager.Constants.*;
 
 @RestController
 @RequestMapping("/contact/v1")
@@ -17,47 +22,79 @@ public class ContactsController {
 
     private final ContactsService contactsService;
 
+    private static final Logger log = LoggerFactory.getLogger(ContactsService.class);
+
     @Autowired
     public ContactsController(ContactsService contactsService) {
         this.contactsService = contactsService;
     }
 
     @PostMapping(value = "/contact")
-    public Contact addContact(@RequestBody Contact contact) throws ApplicationException {
-        return contactsService.addOrUpdateContact(contact);
+    public ResponseEntity<Object> addContact(@RequestBody Contact contact) {
+        try {
+            Contact addedContact = contactsService.addOrUpdateContact(contact);
+            return ResponseHandler.response(addedContact, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("Error while add new contact, msg " + e.getMessage());
+            return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
+        }
     }
 
-    @GetMapping(value = "/contacts/{city}")
-    public List<Contact> getContactsByCity(@PathVariable("city") String city) {
-        return contactsService.getContactByAddressCity(city);
+    @GetMapping(value = "/contacts/city/{city}")
+    public ResponseEntity<Object> getContactsByCity(@PathVariable("city") String city) {
+        try {
+            List<Contact> contacts = contactsService.getContactByAddressCity(city);
+            return ResponseHandler.response(contacts, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("Error while get contacts by city, msg " + e.getMessage());
+            return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
+        }
     }
 
     @GetMapping(value = "/contacts/{postalCode}")
-    public List<Contact> getContactsByPostalCode(@PathVariable("postalCode") String postalCode) {
-        return contactsService.getContactByAddressPostalCode(postalCode);
+    public ResponseEntity<Object> getContactsByPostalCode(@PathVariable("postalCode") String postalCode) {
+        try {
+            List<Contact> contacts = contactsService.getContactByAddressPostalCode(postalCode);
+            return ResponseHandler.response(contacts, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("Error while get contacts by postal code, msg " + e.getMessage());
+            return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
+        }
     }
 
     @GetMapping(value = "/contacts")
-    public List<Contact> getAllContacts() {
-        return contactsService.getAllContacts();
+    public ResponseEntity<Object> getAllContacts() {
+        try {
+            List<Contact> contacts = contactsService.getAllContacts();
+            log.info("contacts : " + contacts.size());
+            return ResponseHandler.response(contacts, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("Error while get all contacts, msg " + e.getMessage());
+            return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
+        }
     }
 
     @GetMapping(value = "/contact/{uuid}")
-    public Contact getContactByUuid(@PathVariable("uuid") String uuid) throws ResourceNotFoundException {
-        return contactsService
-                .getContactById(uuid)
-                .orElseThrow(() -> new ResourceNotFoundException("Contact not found on :: " + uuid));
+    public ResponseEntity<Object> getContactByUuid(@PathVariable("uuid") String uuid) {
+        try {
+            Contact contactByUuid = contactsService.getContactById(uuid)
+                    .orElseThrow(() -> new ResourceNotFoundException(CONTACT_NOT_FOUND));
+            return ResponseHandler.response(contactByUuid, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("Error while get contact by uuid " + uuid + ", msg " + e.getMessage());
+            return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
+        }
     }
 
     @DeleteMapping(value = "/contact/{uuid}")
-    public Map<String, Boolean> deleteContact(@PathVariable("uuid") String uuid) throws ResourceNotFoundException {
-        contactsService
-                .getContactById(uuid)
-                .orElseThrow(() -> new ResourceNotFoundException("Contact not found on :: " + uuid));
-
-        Boolean isDeleted = contactsService.deleteById(uuid);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", isDeleted);
-        return response;
+    public ResponseEntity<Object> deleteContact(@PathVariable("uuid") String uuid) {
+        try {
+            contactsService.getContactById(uuid)
+                    .orElseThrow(() -> new ResourceNotFoundException(CONTACT_NOT_FOUND));
+            return ResponseHandler.response(contactsService.deleteById(uuid), HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("Error while delete contact by uuid " + uuid + ", msg " + e.getMessage());
+            return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
+        }
     }
 }

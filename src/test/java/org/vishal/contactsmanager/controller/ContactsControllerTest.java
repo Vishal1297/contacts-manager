@@ -43,10 +43,9 @@ class ContactsControllerTest implements WithAssertions {
     @Test
     void givenContact_whenAddContact_thenReturns_200_OK() throws Exception {
         Contact contactToAdd = createContact();
-        Contact addedContact = contactToAdd;
         Contact contactRequest = createContact();
 
-        when(service.addOrUpdateContact(contactToAdd)).thenReturn(addedContact);
+        when(service.addOrUpdateContact(contactToAdd)).thenReturn(contactToAdd);
 
         mockMvc.perform(post(BASE_URI + "/contact")
                         .contentType(MediaType.APPLICATION_JSON)
