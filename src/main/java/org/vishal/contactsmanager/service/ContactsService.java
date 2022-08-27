@@ -3,12 +3,16 @@ package org.vishal.contactsmanager.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vishal.contactsmanager.exceptions.ApplicationException;
+import org.vishal.contactsmanager.exceptions.NotAllowedException;
 import org.vishal.contactsmanager.model.Contact;
 import org.vishal.contactsmanager.respository.ContactsRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.vishal.contactsmanager.Constants.*;
+import static org.vishal.contactsmanager.service.ContactValidationService.isNullOrEmpty;
 
 @Service
 public class ContactsService {
@@ -24,7 +28,7 @@ public class ContactsService {
 
     public Contact addOrUpdateContact(Contact contact) throws ApplicationException {
         validationService.validateContact(contact);
-        if (contact.getUuid() == null || contact.getUuid().isEmpty()) {
+        if (isNullOrEmpty(contact.getUuid())) {
             contact.setUuid(UUID.randomUUID().toString());
         }
 
@@ -34,11 +38,13 @@ public class ContactsService {
         return contactsRepository.save(contact);
     }
 
-    public List<Contact> getContactByAddressCity(String city) {
+    public List<Contact> getContactByAddressCity(String city) throws ApplicationException {
+        if (isNullOrEmpty(city)) throw new NotAllowedException(INVALID_POSTAL_CODE);
         return contactsRepository.findByAddressCity(city);
     }
 
-    public List<Contact> getContactByAddressPostalCode(String postalCode) {
+    public List<Contact> getContactByAddressPostalCode(String postalCode) throws ApplicationException {
+        if (isNullOrEmpty(postalCode)) throw new NotAllowedException(INVALID_POSTAL_CODE);
         return contactsRepository.findByAddressPostalCode(postalCode);
     }
 
@@ -46,11 +52,13 @@ public class ContactsService {
         return (List<Contact>) contactsRepository.findAll();
     }
 
-    public Optional<Contact> getContactById(String uuid) {
+    public Optional<Contact> getContactById(String uuid) throws ApplicationException {
+        if (isNullOrEmpty(uuid)) throw new NotAllowedException(INVALID_CONTACT_UUID);
         return contactsRepository.findById(uuid);
     }
 
-    public boolean deleteById(String uuid) {
+    public boolean deleteById(String uuid) throws ApplicationException {
+        if (isNullOrEmpty(uuid)) throw new NotAllowedException(INVALID_CONTACT_UUID);
         contactsRepository.deleteById(uuid);
         return true;
     }

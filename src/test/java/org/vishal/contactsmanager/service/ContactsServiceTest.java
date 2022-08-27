@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.vishal.contactsmanager.exceptions.ApplicationException;
+import org.vishal.contactsmanager.exceptions.NotAllowedException;
 import org.vishal.contactsmanager.model.Contact;
 import org.vishal.contactsmanager.respository.ContactsRepository;
 
@@ -51,7 +52,7 @@ class ContactsServiceTest implements WithAssertions {
     }
 
     @Test
-    void givenContacts_whenGetContactsByAddressCity_thenReturnsContacts() {
+    void givenContacts_whenGetContactsByAddressCity_thenReturnsContacts() throws ApplicationException {
         List<Contact> contacts = createContacts();
         when(repository.findByAddressCity(anyString())).thenReturn(contacts);
         List<Contact> foundedContacts = underTest.getContactByAddressCity("NEW YORK");
@@ -60,7 +61,7 @@ class ContactsServiceTest implements WithAssertions {
     }
 
     @Test
-    void givenContacts_whenGetContactsByAddressPostalCode_thenReturnsContacts() {
+    void givenContacts_whenGetContactsByAddressPostalCode_thenReturnsContacts() throws ApplicationException {
         List<Contact> contacts = createContacts();
         when(repository.findByAddressPostalCode(anyString())).thenReturn(contacts);
         List<Contact> foundedContacts = underTest.getContactByAddressPostalCode("10005");
@@ -78,7 +79,7 @@ class ContactsServiceTest implements WithAssertions {
     }
 
     @Test
-    void givenContact_whenGetContactById_thenReturnsContact() {
+    void givenContact_whenGetContactById_thenReturnsContact() throws ApplicationException {
         Contact contact = createContact();
         when(repository.findById(anyString())).thenReturn(Optional.of(contact));
         Optional<Contact> foundedContact = underTest.getContactById(RANDOM_UUID);
@@ -87,7 +88,7 @@ class ContactsServiceTest implements WithAssertions {
     }
 
     @Test
-    void givenContact_whenDeleteById_thenReturnsTrue() {
+    void givenContact_whenDeleteById_thenReturnsTrue() throws ApplicationException {
         boolean contactIsDeleted = underTest.deleteById(RANDOM_UUID);
         assertThat(contactIsDeleted).isTrue();
         verify(repository).deleteById(RANDOM_UUID);
