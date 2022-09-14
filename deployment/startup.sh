@@ -1,6 +1,6 @@
 #!/bin/bash
 
-app-image="ivishalyadav/spring-boot-test"
+app-image="ivishalyadav/contacts-manager"
 kubectl="minikube kubectl --"
 
 sudo docker images
