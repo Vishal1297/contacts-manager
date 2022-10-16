@@ -18,6 +18,9 @@ public class Contact {
     @Column(name = "dateOfBirth")
     private Long dateOfBirth;
 
+    @Column(name = "mobileNumber")
+    private String mobileNumber;
+
     @OneToOne(cascade = CascadeType.ALL , orphanRemoval = true)
     @JoinColumn(name = "address_uuid")
     @JsonManagedReference
@@ -63,5 +66,13 @@ public class Contact {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 }

@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.vishal.contactsmanager.exceptions.ApplicationException;
-import org.vishal.contactsmanager.exceptions.NotAllowedException;
 import org.vishal.contactsmanager.model.Contact;
 import org.vishal.contactsmanager.respository.ContactsRepository;
 

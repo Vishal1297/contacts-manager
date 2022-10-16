@@ -31,15 +31,15 @@ public class ContactsService {
         if (isNullOrEmpty(contact.getUuid())) {
             contact.setUuid(UUID.randomUUID().toString());
         }
-
-        if (contact.getAddress() != null && (contact.getAddress().getUuid() == null || contact.getUuid().isEmpty())) {
+        if (contact.getAddress() != null &&
+                (isNullOrEmpty(contact.getAddress().getUuid()) || isNullOrEmpty(contact.getUuid()))) {
             contact.getAddress().setUuid(UUID.randomUUID().toString());
         }
         return contactsRepository.save(contact);
     }
 
     public List<Contact> getContactByAddressCity(String city) throws ApplicationException {
-        if (isNullOrEmpty(city)) throw new NotAllowedException(INVALID_POSTAL_CODE);
+        if (isNullOrEmpty(city)) throw new NotAllowedException(INVALID_CITY_NAME);
         return contactsRepository.findByAddressCity(city);
     }
 
@@ -60,6 +60,16 @@ public class ContactsService {
     public boolean deleteById(String uuid) throws ApplicationException {
         if (isNullOrEmpty(uuid)) throw new NotAllowedException(INVALID_CONTACT_UUID);
         contactsRepository.deleteById(uuid);
+        return true;
+    }
+
+    public List<Contact> searchContactsByFullName(String fullName) throws ApplicationException {
+        if (isNullOrEmpty(fullName)) throw new NotAllowedException(INVALID_FULL_NAME);
+        return contactsRepository.findByFullName(fullName);
+    }
+
+    public boolean deleteAll() {
+        contactsRepository.deleteAll();
         return true;
     }
 }

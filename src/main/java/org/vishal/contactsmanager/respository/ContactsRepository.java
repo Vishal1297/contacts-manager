@@ -13,4 +13,6 @@ public interface ContactsRepository extends CrudRepository<Contact, String> {
 
     List<Contact> findByAddressPostalCode(String postalCode);
 
+    List<Contact> findByFullName(String fullName);
+
 }

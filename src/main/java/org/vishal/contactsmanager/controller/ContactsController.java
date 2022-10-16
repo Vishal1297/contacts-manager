@@ -1,6 +1,5 @@
 package org.vishal.contactsmanager.controller;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,9 @@ import org.vishal.contactsmanager.service.providers.ResponseHandler;
 
 import java.util.List;
 
-import static org.vishal.contactsmanager.Constants.*;
+import static org.vishal.contactsmanager.Constants.CONTACT_NOT_FOUND;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/contact/v1")
 public class ContactsController {
@@ -94,6 +94,28 @@ public class ContactsController {
             return ResponseHandler.response(contactsService.deleteById(uuid), HttpStatus.OK);
         } catch (Exception e) {
             log.info("Error while delete contact by uuid " + uuid + ", msg " + e.getMessage());
+            return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
+        }
+    }
+
+    @GetMapping(value = "/contacts/name/{fullName}")
+    public ResponseEntity<Object> searchContactsByFullName(@PathVariable("fullName") String fullName) {
+        try {
+            List<Contact> contacts = contactsService.searchContactsByFullName(fullName);
+            log.info("Found contacts size :" + contacts.size() + " by fullName :" + fullName);
+            return ResponseHandler.response(contacts, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("Error while search contacts by fullName, msg " + e.getMessage());
+            return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
+        }
+    }
+
+    @DeleteMapping(value = "/contacts/all")
+    public ResponseEntity<Object> deleteAllContacts() {
+        try {
+            return ResponseHandler.response(contactsService.deleteAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("Error while deleting all contacts, msg " + e.getMessage());
             return ResponseHandler.error(e.getMessage(), HttpStatus.MULTI_STATUS);
         }
     }
