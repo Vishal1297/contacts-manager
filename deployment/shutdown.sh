@@ -5,15 +5,15 @@ kubectl="minikube kubectl --"
 
 # Remove image
 # shellcheck disable=SC2046
-sudo docker rmi $(docker images "${app-image}" -a -q)
+docker rmi -f $(docker images "${app-image}" -a -q)
 
-sudo docker images
+docker images
 
 # Delete app deployment
-${kubectl} delete deployment spring-test-app
+${kubectl} delete deployment contacts-manager-app
 
 # Delete app service
-${kubectl} delete service spring-test-service
+${kubectl} delete service contacts-manager-service
 
 # Delete mysql deployment
 ${kubectl} delete deployment mysql

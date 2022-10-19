@@ -3,16 +3,16 @@
 app-image="ivishalyadav/contacts-manager"
 kubectl="minikube kubectl --"
 
-sudo docker images
+docker images
 
 # Remove previous image with tag repo/image-name
 # shellcheck disable=SC2046
-sudo docker rmi $(docker images "${app-image}" -a -q)
+docker rmi $(docker images "${app-image}" -a -q)
 
 # Create image with tag repo/image-name
-sudo docker build -t "${app-image}" .
+docker build -t "${app-image}" .
 
-sudo docker images
+docker images
 
 # Create mysql deployment
 ${kubectl} apply -f mysql-deployment.yaml
