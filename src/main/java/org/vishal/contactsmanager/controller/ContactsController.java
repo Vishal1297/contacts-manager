@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.vishal.contactsmanager.Constants.CONTACT_NOT_FOUND;
 
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin()
 @RestController
 @RequestMapping("/contact/v1")
 public class ContactsController {
