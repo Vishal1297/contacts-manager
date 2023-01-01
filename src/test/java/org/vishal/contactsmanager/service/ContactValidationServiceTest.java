@@ -28,7 +28,7 @@ class ContactValidationServiceTest implements WithAssertions {
         Contact contact = new Contact();
         contact.setFullName(null);
 
-        assertForNotAllowedException(contact, "full name not provided");
+        assertForNotAllowedException(contact, "Invalid full name");
     }
 
     @Test
@@ -36,7 +36,7 @@ class ContactValidationServiceTest implements WithAssertions {
         Contact contact = new Contact();
         contact.setFullName("");
 
-        assertForNotAllowedException(contact, "full name not provided");
+        assertForNotAllowedException(contact, "Invalid full name");
     }
 
     @Test
@@ -45,19 +45,19 @@ class ContactValidationServiceTest implements WithAssertions {
         contact.setFullName("BIG BOY");
         contact.setAddress(null);
 
-        assertForNotAllowedException(contact, "postal code not provided");
+        assertForNotAllowedException(contact, "Invalid mobile number");
     }
 
     @Test
     void givenContact_whenContactAddressPostalCodeIsNull_thenThrowNotAllowedException() {
         Contact contact = createContactWithAddress("BIG BOY", null);
-        assertForNotAllowedException(contact, "postal code not provided");
+        assertForNotAllowedException(contact, "Invalid mobile number");
     }
 
     @Test
     void givenContact_whenContactAddressPostalCodeIsEmpty_thenThrowNotAllowedException() {
         Contact contact = createContactWithAddress("BIG BOY", "");
-        assertForNotAllowedException(contact, "postal code not provided");
+        assertForNotAllowedException(contact, "Invalid mobile number");
     }
 
     private Contact createContactWithAddress(String fullName, String postalCode) {

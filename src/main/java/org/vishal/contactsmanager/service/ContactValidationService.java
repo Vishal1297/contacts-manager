@@ -20,8 +20,12 @@ public class ContactValidationService {
         if (isNullOrEmpty(contact.getMobileNumber())) {
             throw new NotAllowedException(INVALID_MOBILE_NUMBER);
         }
-        if ((contact.getAddress() == null) || isNullOrEmpty(contact.getAddress().getPostalCode())) {
-            throw new NotAllowedException(INVALID_POSTAL_CODE);
+        if ((contact.getAddress() == null)) {
+            throw new NotAllowedException(INVALID_ADDRESS);
+        }else {
+            if (isNullOrEmpty(contact.getAddress().getPostalCode())) {
+                throw new NotAllowedException(INVALID_POSTAL_CODE);
+            }
         }
     }
 
